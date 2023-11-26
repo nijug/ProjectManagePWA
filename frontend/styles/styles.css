@@ -1,0 +1,75 @@
+/* frontend/styles/styles.css */
+body, #main-layout {
+    height: auto;
+    min-height: 100vh; /* vh stands for viewport height */
+    background-color: #f4f4f4;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #333333;
+}
+
+.button-primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.button-error {
+    background-color: #FF5722;
+    color: white;
+}
+
+/* New styles for project cards */
+.project-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    width: 40%;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.project-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.title, .project-name {
+    text-align: center;
+    width: 100%;
+}
+.project-name {
+    margin-bottom: 10px;
+    color: #4CAF50;
+}
+
+.project-description {
+    color: #333333;
+}
+
+.project-date, .project-priority {
+    color: #777777;
+}
+
+.title {
+    color: #4CAF50;
+    padding: 20px 0;
+}
+
+.button-close {
+    color: red;
+    font-size: 18px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.button-close:hover {
+    color: darkred; /* Change color on hover if needed */
+}
