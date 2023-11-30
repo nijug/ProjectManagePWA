@@ -2,8 +2,10 @@ package com.example.projectmanagepwa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {"org.ProjectService", "com.example.projectmanagepwa.view"})
 public class ProjectManagePwaApplication {
 
 	public static void main(String[] args) {

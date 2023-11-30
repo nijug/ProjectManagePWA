@@ -1,8 +1,6 @@
 package com.example.projectmanagepwa.view;
 
 import com.example.projectmanagepwa.events.ProjectUpdated;
-import com.example.projectmanagepwa.model.Project;
-import com.example.projectmanagepwa.service.ProjectService;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
@@ -13,21 +11,32 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.router.Route;
 import com.vaadin.flow.shared.Registration;
+import com.vaadin.flow.spring.annotation.UIScope;
+import jakarta.annotation.PostConstruct;
+import org.ProjectService.Project;
+import org.ProjectService.ProjectService;
 
 import java.util.Arrays;
 import java.util.List;
+@Route
+@UIScope
 public class CardGrid extends VerticalLayout {
-    private Registration registration;
-    private ProjectService projectService;
 
-    private Dialog dialog;
+    private final ProjectService projectService;
+    private Registration registration;
+
     private int currentPage = 0;
 
-    public CardGrid( ProjectService projectService) {
+    public CardGrid(ProjectService projectService) {
         this.projectService = projectService;
         setAlignItems(Alignment.CENTER);
         setMargin(true);
+    }
+
+    @PostConstruct
+    public void init() {
         updateGrid();
     }
 
@@ -118,11 +127,10 @@ public class CardGrid extends VerticalLayout {
     }
 
     private void openFormForUpdate(Project project) {
-
         ProjectForm updateForm = new ProjectForm(projectService);
         updateForm.setProject(project);
 
-        dialog = new Dialog(updateForm);
+        Dialog dialog = new Dialog(updateForm);
         dialog.open();
     }
 

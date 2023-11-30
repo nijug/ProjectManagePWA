@@ -1,9 +1,8 @@
 package com.example.projectmanagepwa.view;
 
 import com.example.projectmanagepwa.events.ProjectUpdated;
-import com.example.projectmanagepwa.model.Project;
 import com.example.projectmanagepwa.model.SqlDateToLocalDateConverter;
-import com.example.projectmanagepwa.service.ProjectService;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.UI;
@@ -15,38 +14,34 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.BinderValidationStatus;
-import com.vaadin.flow.data.binder.ValidationResult;
+import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
+import org.ProjectService.Project;
+import org.ProjectService.ProjectService;
 import com.vaadin.flow.data.validator.StringLengthValidator;
 
-import java.util.Optional;
 
+
+import java.util.Optional;
+@Route
+@UIScope
 public class ProjectForm extends FlexLayout {
 
     private final ProjectService projectService;
-    private TextField name = new TextField("Name");
-    private TextField description = new TextField("Description");
 
-    private DatePicker dateStarted = new DatePicker("Date Started");
+    private final Button deleteButton = new Button("Delete");
 
-    private DatePicker dateEnded = new DatePicker("Date Ended");
 
-    private ComboBox<String> priority = new ComboBox<>("Priority");
-    private Button saveButton = new Button("Save");
 
-    private Button deleteButton = new Button("Delete");
-
-    private HorizontalLayout priorityLayout = new HorizontalLayout();
-    private HorizontalLayout buttonLayout = new HorizontalLayout();
-
-    private Button closeButton = new Button(new Icon(VaadinIcon.CLOSE));
-    private Binder<Project> binder = new Binder<>(Project.class);
+    private final Binder<Project> binder = new Binder<>(Project.class);
 
     public ProjectForm(ProjectService projectService) {
         this.projectService = projectService;
+        TextField name = new TextField("Name");
         binder.forField(name)
                 .asRequired("Name cannot be empty")
                 .withValidator(new StringLengthValidator(
@@ -54,6 +49,7 @@ public class ProjectForm extends FlexLayout {
                         1, 255))
                 .bind(Project::getName, Project::setName);
 
+        TextField description = new TextField("Description");
         binder.forField(description)
                 .asRequired("Description cannot be empty")
                 .withValidator(new StringLengthValidator(
@@ -62,16 +58,19 @@ public class ProjectForm extends FlexLayout {
                 .bind(Project::getDescription, Project::setDescription);
 
 
+        DatePicker dateStarted = new DatePicker("Date Started");
         binder.forField(dateStarted)
                 .withConverter(new SqlDateToLocalDateConverter())
                 .asRequired("Date Started cannot be empty")
                 .bind(Project::getDateStarted, Project::setDateStarted);
 
+        DatePicker dateEnded = new DatePicker("Date Ended");
         binder.forField(dateEnded)
                 .withConverter(new SqlDateToLocalDateConverter())
                 .asRequired("Date Ended cannot be empty")
                 .bind(Project::getDateEnded, Project::setDateEnded);
 
+        ComboBox<String> priority = new ComboBox<>("Priority");
         binder.forField(priority)
                 .asRequired("Priority cannot be empty")
                 .bind(Project::getPriority, Project::setPriority);
@@ -79,8 +78,10 @@ public class ProjectForm extends FlexLayout {
         binder.bindInstanceFields(this);
         priority.setItems("High", "Medium", "Low");
 
+        Button saveButton = new Button("Save");
         saveButton.addClickListener(event -> onSave());
         deleteButton.addClickListener(event -> onDelete());
+        Button closeButton = new Button(new Icon(VaadinIcon.CLOSE));
         closeButton.addClickListener(event -> onClose());
 
         saveButton.addClassName("button-primary");
@@ -90,7 +91,7 @@ public class ProjectForm extends FlexLayout {
         setFlexDirection(FlexDirection.COLUMN);
         setAlignItems(Alignment.CENTER);
 
-        add(closeButton,name, description, dateStarted, dateEnded, priority, saveButton, deleteButton);
+        add(closeButton, name, description, dateStarted, dateEnded, priority, saveButton, deleteButton);
     }
 
     private void onDelete() {

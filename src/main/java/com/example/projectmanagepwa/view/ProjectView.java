@@ -1,33 +1,36 @@
 package com.example.projectmanagepwa.view;
 
-import com.example.projectmanagepwa.model.Project;
-import com.example.projectmanagepwa.service.ProjectService;
+import com.vaadin.flow.spring.annotation.UIScope;
+import org.ProjectService.Project;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.router.Route;
-
-import java.util.Arrays;
+import org.ProjectService.ProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Route
+@UIScope
 public class ProjectView extends VerticalLayout {
 
-    private ProjectService projectService;
-    private CardGrid cardGrid;
-    private Button addButton = new Button("Add");
-    private Button previousButton = new Button("Previous");
-    private Button nextButton = new Button("Next");
+    private final ProjectService projectService;
+    private final CardGrid cardGrid;
 
+    @Autowired
     public ProjectView(ProjectService projectService) {
         this.projectService = projectService;
-        cardGrid = new CardGrid(projectService);
+
+        cardGrid = new CardGrid(this.projectService);
+        Button addButton = new Button("Add");
         addButton.addClickListener(event -> onAdd());
 
         addButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        Button previousButton = new Button("Previous");
         previousButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        Button nextButton = new Button("Next");
         nextButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         addButton.addClassName("button-primary");
@@ -56,11 +59,6 @@ public class ProjectView extends VerticalLayout {
 
         add(mainLayout);
 
-        loadProjects();
-    }
-
-    private void loadProjects() {
-        System.out.println("loadProjects");
         cardGrid.updateGrid();
     }
 
@@ -69,7 +67,7 @@ public class ProjectView extends VerticalLayout {
         ProjectForm addForm = new ProjectForm(projectService);
         addForm.setProject(newProject);
         Dialog addDialog = new Dialog(addForm);
-        addDialog.addDialogCloseActionListener(event -> loadProjects());
+        addDialog.addDialogCloseActionListener(event -> cardGrid.updateGrid());
         addDialog.open();
     }
 }

@@ -5,7 +5,7 @@ import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.server.PWA;
 
 @Viewport("width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes, viewport-fit=cover")
-@PWA(name = "Your App Name", shortName = "AppShortName")
+@PWA(name = "Project Manage PWA", shortName = "ProjectManage")
 @Push
 public class AppShell implements AppShellConfigurator {
 
