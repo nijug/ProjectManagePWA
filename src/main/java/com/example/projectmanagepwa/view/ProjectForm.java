@@ -32,15 +32,12 @@ import java.util.Optional;
 public class ProjectForm extends FlexLayout {
 
     private final ProjectService projectService;
-
     private final Button deleteButton = new Button("Delete");
-
-
 
     private final Binder<Project> binder = new Binder<>(Project.class);
 
-    public ProjectForm(ProjectService projectService) {
-        this.projectService = projectService;
+    public ProjectForm() {
+        projectService = ProjectService.getInstance();
         TextField name = new TextField("Name");
         binder.forField(name)
                 .asRequired("Name cannot be empty")

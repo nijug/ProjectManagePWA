@@ -9,21 +9,19 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import org.ProjectService.ProjectService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 @Route
 @UIScope
 public class ProjectView extends VerticalLayout {
 
-    private final ProjectService projectService;
+
     private final CardGrid cardGrid;
 
-    @Autowired
-    public ProjectView(ProjectService projectService) {
-        this.projectService = projectService;
 
-        cardGrid = new CardGrid(this.projectService);
+    public ProjectView() {
+
+        cardGrid = new CardGrid();
         Button addButton = new Button("Add");
         addButton.addClickListener(event -> onAdd());
 
@@ -64,7 +62,7 @@ public class ProjectView extends VerticalLayout {
 
     private void onAdd() {
         Project newProject = new Project();
-        ProjectForm addForm = new ProjectForm(projectService);
+        ProjectForm addForm = new ProjectForm();
         addForm.setProject(newProject);
         Dialog addDialog = new Dialog(addForm);
         addDialog.addDialogCloseActionListener(event -> cardGrid.updateGrid());

@@ -29,15 +29,16 @@ public class CardGrid extends VerticalLayout {
 
     private int currentPage = 0;
 
-    public CardGrid(ProjectService projectService) {
-        this.projectService = projectService;
+    public CardGrid() {
+        projectService = ProjectService.getInstance();
         setAlignItems(Alignment.CENTER);
         setMargin(true);
+        updateGrid();
     }
 
     @PostConstruct
     public void init() {
-        updateGrid();
+
     }
 
     @Override
@@ -127,7 +128,7 @@ public class CardGrid extends VerticalLayout {
     }
 
     private void openFormForUpdate(Project project) {
-        ProjectForm updateForm = new ProjectForm(projectService);
+        ProjectForm updateForm = new ProjectForm();
         updateForm.setProject(project);
 
         Dialog dialog = new Dialog(updateForm);

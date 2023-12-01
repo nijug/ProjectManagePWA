@@ -4,7 +4,6 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
-import org.ProjectService.ProjectService;
 
 
 @Route
@@ -13,8 +12,8 @@ import org.ProjectService.ProjectService;
 
 public class MainView extends VerticalLayout {
 
-    public MainView(ProjectService projectService) {
-        ProjectView projectView = new ProjectView(projectService);
+    public MainView() {
+        ProjectView projectView = new ProjectView();
         setId("main-layout");
 
         H1 title = new H1("Project Management");
